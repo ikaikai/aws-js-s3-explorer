@@ -30,24 +30,24 @@ permissions and limitations under the License.
         #wrapper {
             padding-left: 0;
         }
-        
+
         #page-wrapper {
             width: 100%;
             padding: 5px 15px;
         }
-        
+
         #tb-s3objects {
             width: 100% !Important;
         }
-        
+
         a {
             color: #00B7FF;
         }
-        
+
         body {
             font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
         }
-        
+
         td {
             font: 12px "Lucida Grande", Helvetica, Arial, sans-serif;
         }
@@ -114,11 +114,11 @@ permissions and limitations under the License.
                         <table class="table table-bordered table-hover table-striped" id="tb-s3objects">
                             <thead>
                                 <tr>
-                                    <th>Object</th>
-                                    <th>Folder</th>
-                                    <th>Last Modified</th>
-                                    <th>Timestamp</th>
-                                    <th>Size</th>
+                                    <th>对象</th>
+                                    <th>目录</th>
+                                    <th>最后更改时间</th>
+                                    <th>时间戳</th>
+                                    <th>大小</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody-s3objects"></tbody>
@@ -155,7 +155,7 @@ permissions and limitations under the License.
         size: 4
     };
 
-    AWS.config.region = 'us-east-1';
+    AWS.config.region = 'cn-north-1';
     console.log('Region: ' + AWS.config.region);
 
     // Initialize S3 SDK and the moment library (for time formatting utilities)
@@ -184,18 +184,18 @@ permissions and limitations under the License.
     }
 
     function object2hrefvirt(bucket, object) {
-        if (AWS.config.region === "us-east-1") {
-            return document.location.protocol + '//' + bucket + '.s3.amazonaws.com/' + encodeURIComponent(object);
+        if (AWS.config.region === "cn-north-1") {
+            return document.location.protocol + '//' + bucket +  '.s3.' + AWS.config.region + '.amazonaws.com.cn/' + encodeURIComponent(object);
         } else {
-            return document.location.protocol + '//' + bucket + '.s3-' + AWS.config.region + '.amazonaws.com/' + encodeURIComponent(object);
+            return document.location.protocol + '//' + bucket + '.s3-' + AWS.config.region + '.amazonaws.com.cn/' + encodeURIComponent(object);
         }
     }
 
     function object2hrefpath(bucket, object) {
-        if (AWS.config.region === "us-east-1") {
-            return document.location.protocol + "//s3.amazonaws.com/" + bucket + "/" + encodeURIComponent(object);
+        if (AWS.config.region === "cn-north-1") {
+            return document.location.protocol + '.s3.' + AWS.config.region + '.amazonaws.com.cn/' + bucket + "/" + encodeURIComponent(object);
         } else {
-            return document.location.protocol + "//s3-' + AWS.config.region + '.amazonaws.com/" + bucket + "/" + encodeURIComponent(object);
+            return document.location.protocol + "//s3-' + AWS.config.region + '.amazonaws.com.cn/" + bucket + "/" + encodeURIComponent(object);
         }
     }
 
@@ -635,7 +635,7 @@ permissions and limitations under the License.
         // launched directly from within a bucket), else prompt the user.
         if (s3exp_config.Bucket) {
             (s3exp_lister = s3list(s3exp_config, s3draw)).go();
-        } else if (parser.hostname.endsWith('amazonaws.com')) {
+        } else if (parser.hostname.endsWith('amazonaws.com.cn')) {
             // Hostname is likely to be in one of the following forms:
             // - s3.amazonaws.com
             // - bucket1.s3.amazonaws.com
